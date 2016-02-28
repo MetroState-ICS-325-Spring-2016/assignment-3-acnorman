@@ -31,6 +31,9 @@ $db_database = 'classicmodels';
 // http://php.net/manual/en/language.operators.errorcontrol.php
 $mysql_connection = @new mysqli($db_hostname, $db_username, $db_password, $db_database);
 
+//mysqli_set_charset($mysql_connection, "utf8");
+$mysql_connection->set_charset('utf8');
+
 // Make sure that the connection to the MySQL database is ok.
 if ($mysql_connection->connect_errno) {
     // http://php.net/manual/en/mysqli.connect-error.php
@@ -48,14 +51,14 @@ if ($mysql_connection->connect_errno) {
 //
 // For your query, you will need to join the customers and employees
 // tables together.
-$query_result = $mysql_connection->query("SELECT your query here");
+$query_result = $mysql_connection->query("SELECT `customerName`, `country`, `firstName`, `lastName` FROM `customers`, `employees` WHERE `employeeNumber` = `salesRepEmployeeNumber` ORDER BY `country`, `customerName`");
 
 // Make sure there wasn't an error with the query.
 if ($query_result !== false) {
     // Fetch each row of the query result as an associative array.
     // http://php.net/manual/en/mysqli-result.fetch-assoc.php
     while($row_array = $query_result->fetch_assoc()) {
-	    // Your output goes here
+        echo $row_array['customerName'] . ", " . $row_array['country'] . " - " . $row_array['firstName'] . " " .  $row_array['lastName'] . "\n";
     }
 
     // We're done with the query result set, so free it.
