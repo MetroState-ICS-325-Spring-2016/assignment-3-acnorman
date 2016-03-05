@@ -31,6 +31,7 @@ $db_database = 'classicmodels';
 // http://php.net/manual/en/language.operators.errorcontrol.php
 $mysql_connection = @new mysqli($db_hostname, $db_username, $db_password, $db_database);
 
+//Either statement works fine to get data back in utf8
 //mysqli_set_charset($mysql_connection, "utf8");
 $mysql_connection->set_charset('utf8');
 
